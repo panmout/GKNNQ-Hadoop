@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>gr.uth.ece.dsel</groupId>
-  <artifactId>hadoop</artifactId>
+  <artifactId>gknn-hadoop</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
   <name>hadoop</name>
