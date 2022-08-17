@@ -30,7 +30,7 @@ mr3outputPath=mapreduce3
 #                                    EXECUTE                              #
 ###########################################################################
 
-hadoop jar ./target/hadoop-0.0.1-SNAPSHOT.jar gr.uth.ece.dsel.hadoop.main.Gnn \
+hadoop jar ./target/gknn-hadoop-0.0.1-SNAPSHOT.jar gr.uth.ece.dsel.hadoop.main.Gnn \
 partitioning=$partitioning \
 mode=$mode \
 phase15=$phase15 \
