@@ -1,6 +1,6 @@
 # GKNNQ-Hadoop
 
-## A MapReduce implementation of a parallel and distributed algorithm for efficient solving of the Group K Nearest Neighbor query involving Big Data
+## MapReduce implementation of a parallel and distributed algorithm for efficient solving of the Group K Nearest Neighbor query involving Big Data
 
 ### Description
 The algorithm needs two user provided spatial datasets of point objects in the form {int, double, double} with their coordinates normalized in the area (0,1).
@@ -11,16 +11,16 @@ The algorithm uses two partitioning methods (grid and quad tree), two computatio
 It also provides the ability to switch on or off *pruning heuristics* and *fast sums* computational methods, for testing purposes.
 
 The algorithm consists of three MapReduce phases and four local phases:
-1. Preliminary (local): 
-2. Phase 1 (distributed): Count the number of *training* points in every cell
-3. Phase 1.5 (local):
-4. Phase 2 (distributed): Create a preliminary list of *K* nearest neighbors by searching inside each cell
-5. Phase 2.5 (local):
-6. Phase 3 (distributed): Try to discover neighbors in adjacent cells
-7. Phase 3.5 (local):
+1. Preliminary (local): Local calculation of sample-based quad tree, sorted list of *query* dataset, *query* MBR and centroid, sum of distances from centroid to all *query* dataset.
+2. Phase 1 (distributed): Count the number of *training* points in every cell.
+3. Phase 1.5 (local): Discovery of a group of cells that contain at least *K* *training* points in total. 
+4. Phase 2 (distributed): Create a preliminary list of *K* nearest neighbors per cell, within the group of cells from Phase 1.5.
+5. Phase 2.5 (local): Merge all lists from Phase 2 into one.
+6. Phase 3 (distributed): Try to discover neighbors in distant cells, not in Phase 1.5 group.
+7. Phase 3.5 (local): Merge all neighbor lists from Phases 2.5 and 3 into the final one.
 
 ### How to run
-User must edit script file *run.sh* and provide the appropriate parameters:
+User must edit script file *gnn.sh* and provide the appropriate parameters:
 - partitioning: *gd* or *qt* for grid or quad tree partitioning, respectively
 - mode: *bf* or *ps* for brute force and quad tree computational methods, respectively
 - K: the desired number of neighbors
