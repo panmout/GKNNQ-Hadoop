@@ -1,7 +1,7 @@
 gr/uth/ece/dsel/hadoop/preliminary/SortQueryPoints.class
 gr/uth/ece/dsel/hadoop/util/CreateQTreeArray.class
-gr/uth/ece/dsel/hadoop/phase1/Reducer1.class
 gr/uth/ece/dsel/hadoop/util/Node.class
+gr/uth/ece/dsel/hadoop/phase1/Reducer1.class
 gr/uth/ece/dsel/hadoop/phase3/Driver3.class
 gr/uth/ece/dsel/hadoop/util/Point.class
 gr/uth/ece/dsel/hadoop/util/LearningRateTest.class
@@ -10,11 +10,11 @@ gr/uth/ece/dsel/hadoop/util/takeSample/SampleMapper.class
 gr/uth/ece/dsel/hadoop/util/GnnFunctions.class
 gr/uth/ece/dsel/hadoop/phase1_5/Phase15.class
 gr/uth/ece/dsel/hadoop/util/takeSample/SampleDriver.class
-gr/uth/ece/dsel/hadoop/phase1/Mapper1.class
 gr/uth/ece/dsel/hadoop/util/PointXComparator.class
+gr/uth/ece/dsel/hadoop/phase1/Mapper1.class
 gr/uth/ece/dsel/hadoop/phase2/Reducer2.class
-gr/uth/ece/dsel/hadoop/preliminary/QuadtreeArray.class
 gr/uth/ece/dsel/hadoop/util/ReadHdfsFiles.class
+gr/uth/ece/dsel/hadoop/preliminary/QuadtreeArray.class
 gr/uth/ece/dsel/hadoop/phase3/Mapper3_1.class
 gr/uth/ece/dsel/hadoop/util/CropDataset.class
 gr/uth/ece/dsel/hadoop/util/PointYComparator.class
@@ -27,8 +27,8 @@ gr/uth/ece/dsel/hadoop/preliminary/MbrCentroid.class
 gr/uth/ece/dsel/hadoop/util/IdDist.class
 gr/uth/ece/dsel/hadoop/phase3/Mapper3_2.class
 gr/uth/ece/dsel/hadoop/util/IdDistComparator.class
-gr/uth/ece/dsel/hadoop/phase3_5/Phase3_5.class
 gr/uth/ece/dsel/hadoop/util/BfNeighbors.class
+gr/uth/ece/dsel/hadoop/phase3_5/Phase3_5.class
 gr/uth/ece/dsel/hadoop/phase1/Driver1.class
 gr/uth/ece/dsel/hadoop/phase2/Driver2.class
 gr/uth/ece/dsel/hadoop/main/Gnn.class
