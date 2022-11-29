@@ -8,7 +8,11 @@
   <artifactId>gknnq-hadoop</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
+<<<<<<< HEAD
   <name>hadoop</name>
+=======
+  <name>gknnq-hadoop</name>
+>>>>>>> 2c28e85 (Update README.md)
   <url>https://github.com/panmout/GKNNQ-Hadoop</url>
 
   <properties>
