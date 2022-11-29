@@ -53,6 +53,19 @@ Finally, user must edit script file *gnn.sh* and provide the appropriate paramet
 
 After that, just type /gnn.sh
 
+### How to create a quad tree binary file
+There are two different script files, *createQTree.sh* and *createQTreeArray.sh* that create quad tree files using different methods. The first one is recommended and activated by default.
+User must edit script file *createQTree.sh* and provide the appropriate parameters:
+- nameNode: (same as *run.sh*)
+- trainingDir: (same as *run.sh*)
+- treeDir: (same as *run.sh*)
+- trainingDataset: (same as *run.sh*)
+- samplerate: desired sample rate of the *training* dataset. Give an integer between 1 - 100
+- capacity: the maximum desired number of *training* points in each cell
+- type: *1* (recommended) for simple capacity based quadtree, *2* for all children split method, *3* for average width method
+
+After that, run the script file and a copy of the created quad tree, as *qtree.ser*, will be stored both locally and in the appropriate HDFS directory.
+
 ### Delete MapReduce output HDFS directories
 Run the *delete-hdfs-dirs.sh* script file
 
