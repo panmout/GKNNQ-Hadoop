@@ -2,6 +2,8 @@
 
 ## MapReduce implementation of a parallel and distributed algorithm for efficient solving of the Group K Nearest Neighbor query involving Big Data
 
+## Code used in paper: https://doi.org/10.1007/s10619-020-07317-8
+
 ### Description
 The algorithm needs two user provided spatial datasets of point objects in the form {int, double, double} with their coordinates normalized in the area (0,1).
 The user must also provide the number of neighbors *K* and the grid space decomposition parameter *N*.
