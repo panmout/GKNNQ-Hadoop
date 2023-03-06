@@ -285,27 +285,4 @@ public final class PsNeighbors
 		Point tpoint = this.tpoints.get(i); // get tpoint
 		return tpoint.getX(); // tpoint's x
 	}
-	
-	public String pqToString()
-	{
-		PriorityQueue<IdDist> newPQ = new PriorityQueue<>(k, new IdDistComparator("max"));
-		
-		newPQ.addAll(this.neighbors);
-		
-		String output = "";
-		
-		int counter = 0;
-		
-		while (!newPQ.isEmpty() && counter < k) // add neighbors to output
-	    {
-			IdDist elem = newPQ.poll();
-			int pid = elem.getId();
-			double dist = elem.getDist();
-			output = output.concat(String.format("(%d\t%.10f)", pid, dist));
-			counter++;
-		}
-		output = output.concat("\n");
-		
-		return output;
-	}
 }
