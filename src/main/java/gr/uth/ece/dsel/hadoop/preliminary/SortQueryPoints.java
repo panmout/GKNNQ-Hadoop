@@ -1,32 +1,28 @@
 package gr.uth.ece.dsel.hadoop.preliminary;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
+import gr.uth.ece.dsel.hadoop.util.Point;
+import gr.uth.ece.dsel.hadoop.util.PointXComparator;
+import gr.uth.ece.dsel.hadoop.util.ReadHdfsFiles;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import gr.uth.ece.dsel.hadoop.util.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 public final class SortQueryPoints
 {
 	private static String nameNode; // hostname
-	private static String username; // username
 	private static String queryDir; // HDFS dir containing query dataset
 	private static String queryDataset; // query dataset name in HDFS
-	private static String queryDatasetPath; // full HDFS path+name of query dataset
 	private static FileOutputStream fileout;
 	private static ObjectOutputStream outputObjectFile; // local output object file
-	private static ArrayList<Point> qpoints; // list containing query points
-	private static String outputFileName; // output file name
-	private static String outputFilePath; // full hdfs path name
-	
+
 	public static void main(String[] args)
 	{
-		Long t0 = System.currentTimeMillis();
+		long t0 = System.currentTimeMillis();
 		
 		for (String arg: args)
 		{
@@ -45,12 +41,17 @@ public final class SortQueryPoints
 			else
 				throw new IllegalArgumentException("not a valid argument, must be \"name=arg\", : " + arg);
 		}
-		
-		username = System.getProperty("user.name");
-		queryDatasetPath = String.format("hdfs://%s:9000/user/%s/%s/%s", nameNode, username, queryDir, queryDataset);
-		qpoints = new ArrayList<Point>();
-		outputFileName = "qpoints_sorted.ser";
-		outputFilePath = String.format("hdfs://%s:9000/user/%s/%s/%s", nameNode, username, queryDir, outputFileName);
+
+		// username
+		String username = System.getProperty("user.name");
+		// full HDFS path+name of query dataset
+		String queryDatasetPath = String.format("hdfs://%s:9000/user/%s/%s/%s", nameNode, username, queryDir, queryDataset);
+		// list containing query points
+		ArrayList<Point> qpoints = new ArrayList<>();
+		// output file name
+		String outputFileName = "qpoints_sorted.ser";
+		// full hdfs path name
+		String outputFilePath = String.format("hdfs://%s:9000/user/%s/%s/%s", nameNode, username, queryDir, outputFileName);
 		
 		Long t1 = System.currentTimeMillis();
 		
@@ -60,7 +61,7 @@ public final class SortQueryPoints
 			outputObjectFile = new ObjectOutputStream(fileout); // open local output object file
 			
 			FileSystem fs = FileSystem.get(new Configuration());
-			qpoints = new ArrayList<Point>(ReadHdfsFiles.getQueryPoints(queryDatasetPath, fs)); // read querypoints
+			qpoints = new ArrayList<>(ReadHdfsFiles.getQueryPoints(queryDatasetPath, fs)); // read querypoints
 		}
 		catch (IOException ioException)
 		{
@@ -71,7 +72,7 @@ public final class SortQueryPoints
 		Long t2 = System.currentTimeMillis();
 		
 		// sort list by x ascending
-		Collections.sort(qpoints, new PointXComparator("min"));
+		qpoints.sort(new PointXComparator("min"));
 		
 		Long t3 = System.currentTimeMillis();
 		

@@ -8,14 +8,14 @@ import org.apache.hadoop.mapreduce.Reducer.Context;
 
 public final class PsNeighbors
 {
-	private int k;
-	private ArrayList<Point> qpoints;
-	private double[] mbrCentroid;
-	private PriorityQueue<IdDist> neighbors;
+	private final int k;
+	private final ArrayList<Point> qpoints;
+	private final double[] mbrCentroid;
+	private final PriorityQueue<IdDist> neighbors;
 	private ArrayList<Point> tpoints;
 	private boolean changed = false; // priority queue will be returned only if changed
-	private boolean fastsums;
-	private Context context;
+	private final boolean fastsums;
+	private final Context context;
 	
 	public PsNeighbors(int K, double[] mbrC, ArrayList<Point> qp, PriorityQueue<IdDist> pq, boolean fs, Context con)
 	{
@@ -27,12 +27,12 @@ public final class PsNeighbors
 		this.context = con;
 	}
 	
-	public final void setTpoints(ArrayList<Point> tp)
+	public void setTpoints(ArrayList<Point> tp)
 	{
 		this.tpoints = new ArrayList<Point>(tp);
 	}
 	
-	public final PriorityQueue<IdDist> getNeighbors()
+	public PriorityQueue<IdDist> getNeighbors()
 	{		
 		// read MBR coordinates
 		double xmin = this.mbrCentroid[0];
@@ -61,7 +61,6 @@ public final class PsNeighbors
 			if (xm < x_left) // median qpoint is at left of all tpoints
 			{
 				check_right = true;
-				right_limit = 0;
 			}
 			else if (x_right < xm) // median qpoint is at right of all tpoints
 			{
@@ -84,17 +83,17 @@ public final class PsNeighbors
 			{
 				while ((left_limit > -1) && (xt(left_limit) > xmin))  // if tpoint's x is inside MBR
 				{
-					if (calc_sum_dist_in(left_limit--) == false)
+					if (!calc_sum_dist_in(left_limit--))
 					{
 						cont_search = false;
 						break;
 					}
 				}
-				if (cont_search == true) // if tpoint's x is outside MBR
+				if (cont_search) // if tpoint's x is outside MBR
 				{
 					while (left_limit > -1)
 					{
-						if (calc_sum_dist_out(left_limit--) == false)
+						if (!calc_sum_dist_out(left_limit--))
 						{
 							break;
 						}
@@ -112,17 +111,17 @@ public final class PsNeighbors
 			{
 				while (right_limit < this.tpoints.size() && (xt(right_limit) < xmax)) // if tpoint's x is inside MBR
 				{
-					if (calc_sum_dist_in(right_limit++) == false)
+					if (!calc_sum_dist_in(right_limit++))
 					{
 						cont_search = false;
 						break;
 					}
 				}
-				if (cont_search == true) // if tpoint's x is outside MBR
+				if (cont_search) // if tpoint's x is outside MBR
 				{
 					while (right_limit < this.tpoints.size())
 					{
-						if (calc_sum_dist_out(right_limit++) == false)
+						if (!calc_sum_dist_out(right_limit++))
 						{
 							break;
 						}
@@ -135,14 +134,14 @@ public final class PsNeighbors
 			}
 		}
 	 	
-	 	if (this.changed == true)
+	 	if (this.changed)
 	    	return this.neighbors;
 	    else
 	    	return new PriorityQueue<IdDist>(this.k, new IdDistComparator("max"));
 	 	// end PsNeighbors
 	}
 	
-	private final boolean calc_sum_dist_in(int i) // if tpoint's x is inside MBR
+	private boolean calc_sum_dist_in(int i) // if tpoint's x is inside MBR
 	{
 		// read centroid coordinates
 		double xc = this.mbrCentroid[4];
@@ -212,7 +211,7 @@ public final class PsNeighbors
 		}
 	}
 	
-	private final boolean calc_sum_dist_out(int i) // if tpoint's x is outside MBR
+	private boolean calc_sum_dist_out(int i) // if tpoint's x is outside MBR
 	{
 		// read centroid coordinates
 		double xc = this.mbrCentroid[4];
@@ -281,15 +280,15 @@ public final class PsNeighbors
 		}
 	}
 	
-	private final double xt(int i)
+	private double xt(int i)
 	{
 		Point tpoint = this.tpoints.get(i); // get tpoint
 		return tpoint.getX(); // tpoint's x
 	}
 	
-	public final String pqToString()
+	public String pqToString()
 	{
-		PriorityQueue<IdDist> newPQ = new PriorityQueue<IdDist>(k, new IdDistComparator("max"));
+		PriorityQueue<IdDist> newPQ = new PriorityQueue<>(k, new IdDistComparator("max"));
 		
 		newPQ.addAll(this.neighbors);
 		

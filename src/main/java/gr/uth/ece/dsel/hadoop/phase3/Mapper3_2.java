@@ -12,14 +12,6 @@ import java.io.IOException;
 public class Mapper3_2 extends Mapper<LongWritable, Text, Text, Text>
 {
 	private String partitioning; // bf or qt
-	private String hostname; // hostname
-	private String username; // username
-	private String treeDir; // HDFS dir containing tree file
-	private String treeFileName; // tree file name in HDFS
-	private String treeFile; // full HDFS path to tree file
-	private String overlapsDir; // HDFS dir containing overlaps file
-	private String overlapsFileName; // overlaps file name in HDFS
-	private String overlapsFile; // full HDFS path to overlaps file
 	private Node root; // create root node
 	private int N; // N*N cells
 	private HashSet<String> overlaps;
@@ -51,28 +43,36 @@ public class Mapper3_2 extends Mapper<LongWritable, Text, Text, Text>
 		Configuration conf = context.getConfiguration();
 		
 		partitioning = conf.get("partitioning");
-		
-		hostname = conf.get("namenode"); // get namenode name
-		username = System.getProperty("user.name"); // get user name
-		
+
+		// hostname
+		String hostname = conf.get("namenode"); // get namenode name
+		// username
+		String username = System.getProperty("user.name"); // get user name
+
 		FileSystem fs = FileSystem.get(conf); // get filesystem type from configuration
 		
 		if (partitioning.equals("qt"))
 		{
-			treeDir = conf.get("treeDir"); // HDFS directory containing tree file
-			treeFileName = conf.get("treeFileName"); // get tree filename
-			treeFile = String.format("hdfs://%s:9000/user/%s/%s/%s", hostname, username, treeDir, treeFileName); // full HDFS path to tree file
-			
+			// HDFS dir containing tree file
+			String treeDir = conf.get("treeDir"); // HDFS directory containing tree file
+			// tree file name in HDFS
+			String treeFileName = conf.get("treeFileName"); // get tree filename
+			// full HDFS path to tree file
+			String treeFile = String.format("hdfs://%s:9000/user/%s/%s/%s", hostname, username, treeDir, treeFileName); // full HDFS path to tree file
+
 			root = ReadHdfsFiles.getTree(treeFile, fs);
 		}
 		else if (partitioning.equals("gd"))
 			N = Integer.parseInt(conf.get("N")); // get N
+
+		// HDFS dir containing overlaps file
+		String overlapsDir = conf.get("overlapsDir"); // HDFS directory containing overlaps file
+		// overlaps file name in HDFS
+		String overlapsFileName = conf.get("overlapsFileName"); // get overlaps filename
+		// full HDFS path to overlaps file
+		String overlapsFile = String.format("hdfs://%s:9000/user/%s/%s/%s", hostname, username, overlapsDir, overlapsFileName); // full HDFS path to overlaps file
+		overlaps = new HashSet<>();
 		
-		overlapsDir = conf.get("overlapsDir"); // HDFS directory containing overlaps file
-		overlapsFileName = conf.get("overlapsFileName"); // get overlaps filename
-		overlapsFile = String.format("hdfs://%s:9000/user/%s/%s/%s", hostname, username, overlapsDir, overlapsFileName); // full HDFS path to overlaps file
-		overlaps = new HashSet<String>();
-		
-		overlaps = new HashSet<String>(ReadHdfsFiles.getOverlaps(overlapsFile, fs)); // read overlaps
+		overlaps = new HashSet<>(ReadHdfsFiles.getOverlaps(overlapsFile, fs)); // read overlaps
 	}
 }
