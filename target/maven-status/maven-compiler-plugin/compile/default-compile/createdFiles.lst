@@ -5,7 +5,6 @@ gr/uth/ece/dsel/hadoop/phase1/Reducer1.class
 gr/uth/ece/dsel/hadoop/phase3/Driver3.class
 gr/uth/ece/dsel/hadoop/util/Point.class
 gr/uth/ece/dsel/hadoop/util/LearningRateTest.class
-gr/uth/ece/dsel/hadoop/util/takeSample/SampleReducer$1.class
 gr/uth/ece/dsel/hadoop/util/takeSample/SampleMapper.class
 gr/uth/ece/dsel/hadoop/util/GnnFunctions.class
 gr/uth/ece/dsel/hadoop/util/takeSample/SampleDriver.class

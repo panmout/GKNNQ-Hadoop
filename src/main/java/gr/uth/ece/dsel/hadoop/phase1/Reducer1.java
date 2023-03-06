@@ -14,9 +14,8 @@ public class Reducer1 extends Reducer<Text, IntWritable, Text, IntWritable>
 		int sum = 0; // sum of training points in this cell
 		
 		for (IntWritable val: values) // sum all 1's for each cell_id (key)
-		{
 			sum += val.get();
-		}
+
 		// increment cells number
 		context.getCounter(Metrics.NUM_CELLS).increment(1);
 		
